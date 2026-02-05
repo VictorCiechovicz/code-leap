@@ -1,10 +1,18 @@
+interface FilterBarProps {
+  sortBy: string
+  onSortChange: (value: string) => void
+  filterBy: string
+  onFilterChange: (value: string) => void
+  totalCount: number
+}
+
 export const FilterBar = ({
   sortBy,
   onSortChange,
   filterBy,
   onFilterChange,
   totalCount,
-}) => {
+}: FilterBarProps) => {
   return (
     <div className="filter-bar">
       <div className="filter-info">

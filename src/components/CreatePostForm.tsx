@@ -1,9 +1,15 @@
 import { useState } from 'react'
+import type { CreatePostData } from '../types'
 
 const MAX_TITLE_LENGTH = 100
 const MAX_CONTENT_LENGTH = 500
 
-export const CreatePostForm = ({ username, onCreatePost }) => {
+interface CreatePostFormProps {
+  username: string
+  onCreatePost: (postData: CreatePostData) => Promise<boolean>
+}
+
+export const CreatePostForm = ({ username, onCreatePost }: CreatePostFormProps) => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(false)
@@ -76,3 +82,4 @@ export const CreatePostForm = ({ username, onCreatePost }) => {
     </div>
   )
 }
+

@@ -23,8 +23,11 @@ import {
   getStoredUsername,
   setStoredUsername,
   removeStoredUsername,
-  isUserLoggedIn
+  isUserLoggedIn,
 } from './utils/storage'
+
+// Types
+import type { Post, CreatePostData, UpdatePostData } from './types'
 
 function App() {
   // Auth state
@@ -47,15 +50,15 @@ function App() {
     deletePost,
     updatePost,
     loadMorePosts,
-    clearError
+    clearError,
   } = usePosts(isLoggedIn)
 
   // Likes hook
   const { toggleLike, getPostLikeCount, hasUserLiked } = useLikes()
 
   // Modal state
-  const [postToDelete, setPostToDelete] = useState(null)
-  const [postToEdit, setPostToEdit] = useState(null)
+  const [postToDelete, setPostToDelete] = useState<Post | null>(null)
+  const [postToEdit, setPostToEdit] = useState<Post | null>(null)
 
   // Filtered and sorted posts
   const displayedPosts = useMemo(() => {
@@ -63,13 +66,13 @@ function App() {
 
     // Apply filter
     if (filterBy === 'mine') {
-      filtered = filtered.filter(post => post.username === username)
+      filtered = filtered.filter((post) => post.username === username)
     }
 
     // Apply sort
     filtered.sort((a, b) => {
-      const dateA = new Date(a.created_datetime)
-      const dateB = new Date(b.created_datetime)
+      const dateA = new Date(a.created_datetime).getTime()
+      const dateB = new Date(b.created_datetime).getTime()
       return sortBy === 'newest' ? dateB - dateA : dateA - dateB
     })
 
@@ -77,7 +80,7 @@ function App() {
   }, [posts, filterBy, sortBy, username])
 
   // Auth handlers
-  const handleLogin = (newUsername) => {
+  const handleLogin = (newUsername: string) => {
     setStoredUsername(newUsername)
     setUsername(newUsername)
     setIsLoggedIn(true)
@@ -90,11 +93,11 @@ function App() {
   }
 
   // Post handlers
-  const handleCreatePost = async (postData) => {
+  const handleCreatePost = async (postData: CreatePostData): Promise<boolean> => {
     return await createPost(postData)
   }
 
-  const handleDeletePost = async (postId) => {
+  const handleDeletePost = async (postId: number): Promise<boolean> => {
     const success = await deletePost(postId)
     if (success) {
       setPostToDelete(null)
@@ -102,7 +105,7 @@ function App() {
     return success
   }
 
-  const handleUpdatePost = async (postId, postData) => {
+  const handleUpdatePost = async (postId: number, postData: UpdatePostData): Promise<boolean> => {
     const success = await updatePost(postId, postData)
     if (success) {
       setPostToEdit(null)
@@ -111,15 +114,15 @@ function App() {
   }
 
   // Like handler
-  const handleToggleLike = (postId) => {
+  const handleToggleLike = (postId: number) => {
     toggleLike(postId, username)
   }
 
   // Modal handlers
-  const openDeleteModal = (post) => setPostToDelete(post)
+  const openDeleteModal = (post: Post) => setPostToDelete(post)
   const closeDeleteModal = () => setPostToDelete(null)
 
-  const openEditModal = (post) => setPostToEdit(post)
+  const openEditModal = (post: Post) => setPostToEdit(post)
   const closeEditModal = () => setPostToEdit(null)
 
   // Render signup if not logged in
@@ -135,17 +138,13 @@ function App() {
       <ErrorToast message={error} onDismiss={clearError} />
 
       <main className="main-content">
-        <CreatePostForm
-          username={username}
-          onCreatePost={handleCreatePost}
-        />
+        <CreatePostForm username={username} onCreatePost={handleCreatePost} />
 
         <FilterBar
           sortBy={sortBy}
           onSortChange={setSortBy}
           filterBy={filterBy}
           onFilterChange={setFilterBy}
-          currentUsername={username}
           totalCount={totalCount}
         />
 
@@ -162,11 +161,7 @@ function App() {
         />
 
         {!loading && displayedPosts.length > 0 && filterBy === 'all' && (
-          <LoadMoreButton
-            onClick={loadMorePosts}
-            loading={loadingMore}
-            hasMore={hasMore}
-          />
+          <LoadMoreButton onClick={loadMorePosts} loading={loadingMore} hasMore={hasMore} />
         )}
       </main>
 
@@ -179,14 +174,11 @@ function App() {
       )}
 
       {postToEdit && (
-        <EditModal
-          post={postToEdit}
-          onSave={handleUpdatePost}
-          onCancel={closeEditModal}
-        />
+        <EditModal post={postToEdit} onSave={handleUpdatePost} onCancel={closeEditModal} />
       )}
     </div>
   )
 }
 
 export default App
+

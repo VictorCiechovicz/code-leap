@@ -1,4 +1,10 @@
-export const LoadMoreButton = ({ onClick, loading, hasMore }) => {
+interface LoadMoreButtonProps {
+  onClick: () => void
+  loading: boolean
+  hasMore: boolean
+}
+
+export const LoadMoreButton = ({ onClick, loading, hasMore }: LoadMoreButtonProps) => {
   if (!hasMore) {
     return (
       <div className="load-more-container">
@@ -9,11 +15,7 @@ export const LoadMoreButton = ({ onClick, loading, hasMore }) => {
 
   return (
     <div className="load-more-container">
-      <button
-        className="load-more-button"
-        onClick={onClick}
-        disabled={loading}
-      >
+      <button className="load-more-button" onClick={onClick} disabled={loading}>
         {loading ? (
           <>
             <span className="button-spinner"></span>

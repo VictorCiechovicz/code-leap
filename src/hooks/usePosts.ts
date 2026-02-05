@@ -1,24 +1,40 @@
 import { useState, useEffect, useCallback } from 'react'
 import * as api from '../services/api'
+import type { Post, CreatePostData, UpdatePostData } from '../types'
 
 const POSTS_PER_PAGE = 10
 
-export const usePosts = (isLoggedIn) => {
-  const [posts, setPosts] = useState([])
+interface UsePostsReturn {
+  posts: Post[]
+  loading: boolean
+  loadingMore: boolean
+  error: string | null
+  hasMore: boolean
+  totalCount: number
+  loadPosts: (showLoader?: boolean) => Promise<void>
+  loadMorePosts: () => Promise<void>
+  createPost: (postData: CreatePostData) => Promise<boolean>
+  deletePost: (postId: number) => Promise<boolean>
+  updatePost: (postId: number, postData: UpdatePostData) => Promise<boolean>
+  clearError: () => void
+}
+
+export const usePosts = (isLoggedIn: boolean): UsePostsReturn => {
+  const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(false)
   const [loadingMore, setLoadingMore] = useState(false)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
   const [hasMore, setHasMore] = useState(true)
   const [totalCount, setTotalCount] = useState(0)
 
   const loadPosts = useCallback(async (showLoader = true) => {
     if (showLoader) setLoading(true)
     setError(null)
-    
+
     try {
       const data = await api.fetchPosts(POSTS_PER_PAGE, 0)
-      const sortedPosts = data.results.sort((a, b) =>
-        new Date(b.created_datetime) - new Date(a.created_datetime)
+      const sortedPosts = data.results.sort(
+        (a, b) => new Date(b.created_datetime).getTime() - new Date(a.created_datetime).getTime()
       )
       setPosts(sortedPosts)
       setTotalCount(data.count)
@@ -33,13 +49,13 @@ export const usePosts = (isLoggedIn) => {
 
   const loadMorePosts = useCallback(async () => {
     if (loadingMore || !hasMore) return
-    
+
     setLoadingMore(true)
     try {
       const data = await api.fetchPosts(POSTS_PER_PAGE, posts.length)
       const newPosts = [...posts, ...data.results]
-      const sortedPosts = newPosts.sort((a, b) =>
-        new Date(b.created_datetime) - new Date(a.created_datetime)
+      const sortedPosts = newPosts.sort(
+        (a, b) => new Date(b.created_datetime).getTime() - new Date(a.created_datetime).getTime()
       )
       setPosts(sortedPosts)
       setHasMore(data.next !== null)
@@ -51,7 +67,7 @@ export const usePosts = (isLoggedIn) => {
     }
   }, [posts, loadingMore, hasMore])
 
-  const createPost = async (postData) => {
+  const createPost = async (postData: CreatePostData): Promise<boolean> => {
     setError(null)
     try {
       await api.createPost(postData)
@@ -64,7 +80,7 @@ export const usePosts = (isLoggedIn) => {
     }
   }
 
-  const deletePost = async (postId) => {
+  const deletePost = async (postId: number): Promise<boolean> => {
     setError(null)
     try {
       await api.deletePost(postId)
@@ -77,7 +93,7 @@ export const usePosts = (isLoggedIn) => {
     }
   }
 
-  const updatePost = async (postId, postData) => {
+  const updatePost = async (postId: number, postData: UpdatePostData): Promise<boolean> => {
     setError(null)
     try {
       await api.updatePost(postId, postData)
@@ -113,3 +129,4 @@ export const usePosts = (isLoggedIn) => {
     clearError,
   }
 }
+

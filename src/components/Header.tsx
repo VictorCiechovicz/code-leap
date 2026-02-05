@@ -1,4 +1,9 @@
-export const Header = ({ onLogout, username }) => {
+interface HeaderProps {
+  onLogout: () => void
+  username: string
+}
+
+export const Header = ({ onLogout, username }: HeaderProps) => {
   return (
     <header className="header">
       <div className="header-content">
@@ -13,3 +18,4 @@ export const Header = ({ onLogout, username }) => {
     </header>
   )
 }
+

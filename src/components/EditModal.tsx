@@ -1,6 +1,13 @@
 import { useState } from 'react'
+import type { Post, UpdatePostData } from '../types'
 
-export const EditModal = ({ post, onSave, onCancel }) => {
+interface EditModalProps {
+  post: Post
+  onSave: (postId: number, postData: UpdatePostData) => Promise<boolean>
+  onCancel: () => void
+}
+
+export const EditModal = ({ post, onSave, onCancel }: EditModalProps) => {
   const [title, setTitle] = useState(post.title)
   const [content, setContent] = useState(post.content)
   const [loading, setLoading] = useState(false)
@@ -60,3 +67,4 @@ export const EditModal = ({ post, onSave, onCancel }) => {
     </div>
   )
 }
+

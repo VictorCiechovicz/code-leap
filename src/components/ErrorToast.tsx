@@ -1,4 +1,9 @@
-export const ErrorToast = ({ message, onDismiss }) => {
+interface ErrorToastProps {
+  message: string | null
+  onDismiss: () => void
+}
+
+export const ErrorToast = ({ message, onDismiss }: ErrorToastProps) => {
   if (!message) return null
 
   return (

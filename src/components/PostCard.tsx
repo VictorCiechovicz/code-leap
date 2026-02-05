@@ -1,6 +1,17 @@
 import deleteIcon from '../assets/ic_baseline-delete-forever.svg'
 import editIcon from '../assets/bx_bx-edit.svg'
 import { getTimeAgo } from '../utils/formatTime'
+import type { Post } from '../types'
+
+interface PostCardProps {
+  post: Post
+  currentUsername: string
+  onDelete: (post: Post) => void
+  onEdit: (post: Post) => void
+  likeCount: number
+  hasLiked: boolean
+  onToggleLike: (postId: number) => void
+}
 
 export const PostCard = ({
   post,
@@ -10,7 +21,7 @@ export const PostCard = ({
   likeCount,
   hasLiked,
   onToggleLike,
-}) => {
+}: PostCardProps) => {
   const isOwner = post.username === currentUsername
 
   return (
@@ -56,3 +67,4 @@ export const PostCard = ({
     </div>
   )
 }
+

@@ -1,6 +1,13 @@
 import { useState } from 'react'
+import type { Post } from '../types'
 
-export const DeleteModal = ({ post, onConfirm, onCancel }) => {
+interface DeleteModalProps {
+  post: Post
+  onConfirm: (postId: number) => Promise<boolean>
+  onCancel: () => void
+}
+
+export const DeleteModal = ({ post, onConfirm, onCancel }: DeleteModalProps) => {
   const [loading, setLoading] = useState(false)
 
   const handleDelete = async () => {

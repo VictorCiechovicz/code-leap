@@ -1,6 +1,10 @@
-import { useState } from 'react'
+import { useState, KeyboardEvent } from 'react'
 
-export const SignupModal = ({ onLogin }) => {
+interface SignupModalProps {
+  onLogin: (username: string) => void
+}
+
+export const SignupModal = ({ onLogin }: SignupModalProps) => {
   const [username, setUsername] = useState('')
 
   const handleEnter = () => {
@@ -9,7 +13,7 @@ export const SignupModal = ({ onLogin }) => {
     }
   }
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && username.trim()) {
       handleEnter()
     }

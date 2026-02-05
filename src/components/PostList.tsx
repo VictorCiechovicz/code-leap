@@ -1,6 +1,19 @@
 import { PostCard } from './PostCard'
 import { LoadingSpinner } from './LoadingSpinner'
 import { EmptyState } from './EmptyState'
+import type { Post } from '../types'
+
+interface PostListProps {
+  posts: Post[]
+  loading: boolean
+  error: string | null
+  currentUsername: string
+  onDelete: (post: Post) => void
+  onEdit: (post: Post) => void
+  getPostLikeCount: (postId: number) => number
+  hasUserLiked: (postId: number, username: string) => boolean
+  onToggleLike: (postId: number) => void
+}
 
 export const PostList = ({
   posts,
@@ -12,7 +25,7 @@ export const PostList = ({
   getPostLikeCount,
   hasUserLiked,
   onToggleLike,
-}) => {
+}: PostListProps) => {
   if (loading) {
     return <LoadingSpinner />
   }
@@ -23,7 +36,7 @@ export const PostList = ({
 
   return (
     <>
-      {posts.map((post, index) => (
+      {posts.map((post) => (
         <PostCard
           key={post.id}
           post={post}
@@ -33,9 +46,9 @@ export const PostList = ({
           likeCount={getPostLikeCount(post.id)}
           hasLiked={hasUserLiked(post.id, currentUsername)}
           onToggleLike={onToggleLike}
-          style={{ animationDelay: `${index * 0.05}s` }}
         />
       ))}
     </>
   )
 }
+
