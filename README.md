@@ -7,9 +7,9 @@
 ![Vite](https://img.shields.io/badge/Vite-7.2-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-12.9-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 
-**Uma rede social moderna para desenvolvedores compartilharem ideias e conhecimento.**
+**A modern social network for developers to share ideas and knowledge.**
 
-[Demo](#demo) • [Features](#-features) • [Instalação](#-instalação) • [Tecnologias](#-tecnologias) • [Estrutura](#-estrutura-do-projeto)
+[Demo](#demo) • [Features](#-features) • [Installation](#-installation) • [Technologies](#-technologies) • [Structure](#-project-structure)
 
 </div>
 
@@ -25,80 +25,80 @@
 
 ## ✨ Features
 
-| Feature | Descrição |
-|---------|-----------|
-| 🔐 **Autenticação** | Login com Google ou username personalizado |
-| 📝 **Posts** | Crie, edite e delete suas publicações |
-| ❤️ **Likes** | Curta posts de outros usuários |
-| 🔍 **Filtros** | Filtre por "todos" ou "meus posts" |
-| 📊 **Ordenação** | Ordene por mais recentes ou mais antigos |
-| 📱 **Responsivo** | Interface adaptável para todos os dispositivos |
-| ♾️ **Infinite Scroll** | Carregue mais posts sob demanda |
+| Feature | Description |
+|---------|-------------|
+| 🔐 **Authentication** | Login with Google or custom username |
+| 📝 **Posts** | Create, edit and delete your publications |
+| ❤️ **Likes** | Like posts from other users |
+| 🔍 **Filters** | Filter by "all" or "my posts" |
+| 📊 **Sorting** | Sort by newest or oldest |
+| 📱 **Responsive** | Adaptable interface for all devices |
+| ♾️ **Infinite Scroll** | Load more posts on demand |
 
 ---
 
-## 🛠 Tecnologias
+## 🛠 Technologies
 
-Este projeto foi desenvolvido com as seguintes tecnologias:
+This project was developed with the following technologies:
 
 ### Frontend
-- **[React 19](https://react.dev/)** - Biblioteca para construção de interfaces
-- **[TypeScript](https://www.typescriptlang.org/)** - Superset JavaScript com tipagem estática
-- **[Vite](https://vitejs.dev/)** - Build tool ultrarrápida
+- **[React 19](https://react.dev/)** - Library for building user interfaces
+- **[TypeScript](https://www.typescriptlang.org/)** - JavaScript superset with static typing
+- **[Vite](https://vitejs.dev/)** - Ultra-fast build tool
 
-### Backend & Serviços
-- **[Firebase Auth](https://firebase.google.com/)** - Autenticação com Google
-- **[CodeLeap API](https://dev.codeleap.co.uk/)** - API REST para gerenciamento de posts
+### Backend & Services
+- **[Firebase Auth](https://firebase.google.com/)** - Google authentication
+- **[CodeLeap API](https://dev.codeleap.co.uk/)** - REST API for post management
 
-### Qualidade de Código
-- **[ESLint](https://eslint.org/)** - Linting para manter padrões de código
+### Code Quality
+- **[ESLint](https://eslint.org/)** - Linting to maintain code standards
 
 ---
 
-## 🚀 Instalação
+## 🚀 Installation
 
-### Pré-requisitos
+### Prerequisites
 
 - Node.js 18+
-- npm ou yarn
+- npm or yarn
 
-### Passo a passo
+### Step by step
 
 ```bash
-# Clone o repositório
-git clone https://github.com/seu-usuario/codeleap.git
+# Clone the repository
+git clone https://github.com/your-username/codeleap.git
 
-# Entre no diretório
+# Enter the directory
 cd codeleap
 
-# Instale as dependências
+# Install dependencies
 npm install
 
-# Configure as variáveis de ambiente (Firebase)
-# Crie um arquivo .env com suas credenciais Firebase
+# Configure environment variables (Firebase)
+# Create a .env file with your Firebase credentials
 
-# Inicie o servidor de desenvolvimento
+# Start the development server
 npm run dev
 ```
 
-### Scripts disponíveis
+### Available Scripts
 
-| Comando | Descrição |
-|---------|-----------|
-| `npm run dev` | Inicia o servidor de desenvolvimento |
-| `npm run build` | Gera a build de produção |
-| `npm run preview` | Visualiza a build de produção |
-| `npm run lint` | Executa o linter |
-| `npm run typecheck` | Verifica tipagem TypeScript |
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Starts the development server |
+| `npm run build` | Generates the production build |
+| `npm run preview` | Preview the production build |
+| `npm run lint` | Runs the linter |
+| `npm run typecheck` | Checks TypeScript typing |
 
 ---
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 
 ```
 src/
-├── assets/           # Imagens e ícones
-├── components/       # Componentes React
+├── assets/           # Images and icons
+├── components/       # React components
 │   ├── CreatePostForm.tsx
 │   ├── DeleteModal.tsx
 │   ├── EditModal.tsx
@@ -111,66 +111,66 @@ src/
 │   ├── PostCard.tsx
 │   ├── PostList.tsx
 │   └── SignupModal.tsx
-├── config/           # Configurações (Firebase)
+├── config/           # Configurations (Firebase)
 ├── contexts/         # React Context (Auth)
 ├── hooks/            # Custom Hooks
 │   ├── useLikes.ts
 │   └── usePosts.ts
-├── services/         # Serviços de API
-├── types/            # Definições TypeScript
-└── utils/            # Funções utilitárias
+├── services/         # API Services
+├── types/            # TypeScript definitions
+└── utils/            # Utility functions
 ```
 
 ---
 
-## 🎯 Funcionalidades Detalhadas
+## 🎯 Detailed Features
 
-### 🔐 Autenticação
-- Login integrado com **Google** via Firebase
-- Opção de login com **username** personalizado
-- Persistência de sessão
+### 🔐 Authentication
+- Integrated login with **Google** via Firebase
+- Option to login with **custom username**
+- Session persistence
 
-### 📝 Gerenciamento de Posts
-- **Criar**: Publique novos posts com título e conteúdo
-- **Editar**: Modifique seus próprios posts
-- **Deletar**: Remova posts com confirmação via modal
-- **Visualizar**: Veja posts de todos os usuários
+### 📝 Post Management
+- **Create**: Publish new posts with title and content
+- **Edit**: Modify your own posts
+- **Delete**: Remove posts with modal confirmation
+- **View**: See posts from all users
 
-### ❤️ Sistema de Likes
-- Curta e descurta posts
-- Contagem de likes em tempo real
-- Feedback visual instantâneo
+### ❤️ Like System
+- Like and unlike posts
+- Real-time like count
+- Instant visual feedback
 
-### 🔍 Filtros e Ordenação
-- Filtrar por "Todos os posts" ou "Meus posts"
-- Ordenar por "Mais recentes" ou "Mais antigos"
-- Contador total de posts
-
----
-
-## 🤝 Contribuindo
-
-Contribuições são bem-vindas! Sinta-se à vontade para:
-
-1. Fazer um Fork do projeto
-2. Criar uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abrir um Pull Request
+### 🔍 Filters and Sorting
+- Filter by "All posts" or "My posts"
+- Sort by "Newest" or "Oldest"
+- Total post counter
 
 ---
 
-## 📄 Licença
+## 🤝 Contributing
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Contributions are welcome! Feel free to:
+
+1. Fork the project
+2. Create a branch for your feature (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is under the MIT license. See the [LICENSE](LICENSE) file for more details.
 
 ---
 
 <div align="center">
 
-Feito com ❤️ por **Victor Ciechovicz**
+Made with ❤️ by **Victor Ciechovicz**
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/seu-perfil)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/seu-usuario)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/your-profile)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/your-username)
 
 </div>
