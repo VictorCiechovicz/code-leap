@@ -17,22 +17,18 @@ import {
 // Hooks
 import { usePosts } from './hooks/usePosts'
 import { useLikes } from './hooks/useLikes'
-
-// Utils
-import {
-  getStoredUsername,
-  setStoredUsername,
-  removeStoredUsername,
-  isUserLoggedIn,
-} from './utils/storage'
+import { useAuth } from './contexts/AuthContext'
 
 // Types
 import type { Post, CreatePostData, UpdatePostData } from './types'
 
 function App() {
-  // Auth state
-  const [username, setUsername] = useState(getStoredUsername)
-  const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn)
+  // Auth context
+  const { user, loading: authLoading, signInWithGoogle, signInWithUsername, logout } = useAuth()
+
+  // Get username from user
+  const username = user?.displayName || ''
+  const isLoggedIn = !!user
 
   // Filter state
   const [sortBy, setSortBy] = useState('newest')
@@ -79,19 +75,6 @@ function App() {
     return filtered
   }, [posts, filterBy, sortBy, username])
 
-  // Auth handlers
-  const handleLogin = (newUsername: string) => {
-    setStoredUsername(newUsername)
-    setUsername(newUsername)
-    setIsLoggedIn(true)
-  }
-
-  const handleLogout = () => {
-    removeStoredUsername()
-    setUsername('')
-    setIsLoggedIn(false)
-  }
-
   // Post handlers
   const handleCreatePost = async (postData: CreatePostData): Promise<boolean> => {
     return await createPost(postData)
@@ -125,15 +108,36 @@ function App() {
   const openEditModal = (post: Post) => setPostToEdit(post)
   const closeEditModal = () => setPostToEdit(null)
 
+  // Show loading while auth is initializing
+  if (authLoading) {
+    return (
+      <div className="signup-overlay">
+        <div className="loading-container">
+          <div className="spinner"></div>
+          <p>Loading...</p>
+        </div>
+      </div>
+    )
+  }
+
   // Render signup if not logged in
   if (!isLoggedIn) {
-    return <SignupModal onLogin={handleLogin} />
+    return (
+      <SignupModal
+        onLogin={signInWithUsername}
+        onGoogleLogin={signInWithGoogle}
+      />
+    )
   }
 
   // Main screen
   return (
     <div className="app-container">
-      <Header onLogout={handleLogout} username={username} />
+      <Header
+        onLogout={logout}
+        username={username}
+        photoURL={user?.photoURL}
+      />
 
       <ErrorToast message={error} onDismiss={clearError} />
 
@@ -181,4 +185,3 @@ function App() {
 }
 
 export default App
-

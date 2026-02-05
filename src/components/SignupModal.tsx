@@ -1,11 +1,15 @@
 import { useState, KeyboardEvent } from 'react'
+import googleIcon from '../assets/google-icon.svg'
 
 interface SignupModalProps {
   onLogin: (username: string) => void
+  onGoogleLogin: () => Promise<void>
 }
 
-export const SignupModal = ({ onLogin }: SignupModalProps) => {
+export const SignupModal = ({ onLogin, onGoogleLogin }: SignupModalProps) => {
   const [username, setUsername] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleEnter = () => {
     if (username.trim()) {
@@ -19,11 +23,51 @@ export const SignupModal = ({ onLogin }: SignupModalProps) => {
     }
   }
 
+  const handleGoogleLogin = async () => {
+    setIsLoading(true)
+    setError(null)
+    try {
+      await onGoogleLogin()
+    } catch (err) {
+      setError('Failed to sign in with Google. Please try again.')
+      console.error('Google login error:', err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="signup-overlay">
       <div className="signup-modal">
         <h1 className="signup-title">Welcome to CodeLeap network!</h1>
-        <label className="signup-label">Please enter your username</label>
+
+        {/* Google Login Button */}
+        <button
+          className="google-login-button"
+          onClick={handleGoogleLogin}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <>
+              <span className="button-spinner"></span>
+              Signing in...
+            </>
+          ) : (
+            <>
+              <img src={googleIcon} alt="Google" width={20} height={20} />
+              Continue with Google
+            </>
+          )}
+        </button>
+
+        {error && <p className="auth-error">{error}</p>}
+
+        <div className="auth-divider">
+          <span>or</span>
+        </div>
+
+        {/* Username Login */}
+        <label className="signup-label">Enter your username</label>
         <input
           type="text"
           className="signup-input"
@@ -45,4 +89,3 @@ export const SignupModal = ({ onLogin }: SignupModalProps) => {
     </div>
   )
 }
-
